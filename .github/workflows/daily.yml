@@ -1,0 +1,43 @@
+name: BasePulse Daily Digest
+
+on:
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Random delay
+        run: sleep $((RANDOM % 3600))
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run BasePulse bot
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TALENT_WALLET: ${{ secrets.TALENT_WALLET }}
+        run: node bot.js
+
+      - name: Commit reports
+        run: |
+          git config user.name "BasePulse Bot"
+          git config user.email "bot@base-pulse.dev"
+          git add reports/
+          git diff --staged --quiet || git commit -m "📊 Daily report $(date +'%Y-%m-%d')"
+          git push

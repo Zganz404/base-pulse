@@ -2,7 +2,7 @@ name: BasePulse Daily Digest
 
 on:
   schedule:
-    - cron: '0 9 * * *'
+    - cron: '15 9 * * *'
   workflow_dispatch:
 
 permissions:
@@ -21,9 +21,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-
-      - name: Random delay
-        run: sleep $((RANDOM % 3600))
 
       - name: Install dependencies
         run: npm install

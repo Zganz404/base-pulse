@@ -10,11 +10,11 @@ const REPORTS_DIR = path.join(__dirname, 'reports');
 
 // Fallback list of 5 free models on OpenRouter
 const MODELS = [
-  'meta-llama/llama-3.3-8b-instruct:free',
+  'meta-llama/llama-3.1-8b-instruct:free',
   'mistralai/mistral-7b-instruct:free',
-  'google/gemma-3-4b-it:free',
-  'qwen/qwen3-8b:free',
-  'deepseek/deepseek-r1-0528:free'
+  'google/gemma-2-9b-it:free',
+  'qwen/qwen-2-7b-instruct:free',
+  'microsoft/phi-3-mini-128k-instruct:free'
 ];
 
 // --- Base ecosystem topics for variety ---

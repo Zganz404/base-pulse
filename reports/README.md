@@ -1,1 +1,2 @@
 - [2026-06-09 — Coinbase and Base ecosystem developer activity](./report-2026-06-09-2026-06-09T12-03-09-407Z.md)
+- [2026-06-10 — Coinbase and Base ecosystem developer activity](./report-2026-06-10-2026-06-10T12-35-55-081Z.md)

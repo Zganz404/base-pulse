@@ -3,6 +3,7 @@ name: BasePulse Daily Digest
 on:
   schedule:
     - cron: '15 9 * * *'
+    - cron: '15 21 * * *'
   workflow_dispatch:
 
 permissions:
@@ -25,13 +26,25 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Check if already ran today
+        id: check
+        run: |
+          TODAY=$(date +'%Y-%m-%d')
+          if ls reports/report-${TODAY}-*.md 2>/dev/null | grep -q .; then
+            echo "already_ran=true" >> $GITHUB_OUTPUT
+          else
+            echo "already_ran=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Run BasePulse bot
+        if: steps.check.outputs.already_ran == 'false'
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           TALENT_WALLET: ${{ secrets.TALENT_WALLET }}
         run: node bot.js
 
       - name: Commit reports
+        if: steps.check.outputs.already_ran == 'false'
         run: |
           git config user.name "BasePulse Bot"
           git config user.email "bot@base-pulse.dev"

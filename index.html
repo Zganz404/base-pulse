@@ -5,50 +5,171 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="talentapp:project_verification" content="a91fdd0e11b6144c52291b122dab6669cfab19e97790808c368c2db25eb4469214c66050be56b4678276c7cc5d77efbf680e2b3473e3cf092a2e4ae6d258a50a">
   <title>BasePulse — AI digest for Base ecosystem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #0a0a0a; color: #fff; font-family: -apple-system, sans-serif; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-    .container { max-width: 640px; padding: 40px 24px; text-align: center; }
-    .badge { display: inline-block; background: #0052FF; color: white; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 32px; }
-    h1 { font-size: 48px; font-weight: 700; margin-bottom: 16px; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #060B14; color: #fff; font-family: 'Inter', sans-serif; min-height: 100vh; overflow-x: hidden; }
+
+    canvas#bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.35; }
+
+    .wrap { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 0 24px; }
+
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 24px 0; }
+    .logo { font-size: 18px; font-weight: 600; letter-spacing: -0.5px; }
+    .logo span { color: #0052FF; }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a { font-size: 14px; color: #6B7280; text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: #fff; }
+
+    .hero { text-align: center; padding: 80px 0 60px; }
+    .pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(0,82,255,0.12); color: #4D8EFF; font-size: 12px; font-weight: 500; padding: 5px 14px; border-radius: 20px; border: 1px solid rgba(0,82,255,0.25); margin-bottom: 28px; }
+    .pill-dot { width: 6px; height: 6px; border-radius: 50%; background: #0052FF; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    h1 { font-size: 52px; font-weight: 600; letter-spacing: -1.5px; line-height: 1.05; margin-bottom: 20px; }
     h1 span { color: #0052FF; }
-    p { color: #888; font-size: 18px; line-height: 1.6; margin-bottom: 40px; }
-    .links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-    .btn { padding: 12px 28px; border-radius: 8px; font-size: 15px; font-weight: 600; text-decoration: none; transition: opacity 0.2s; }
-    .btn:hover { opacity: 0.8; }
-    .btn-primary { background: #0052FF; color: white; }
-    .btn-secondary { background: #1a1a1a; color: white; border: 1px solid #333; }
-    .stats { margin-top: 60px; display: flex; gap: 40px; justify-content: center; }
-    .stat { text-align: center; }
-    .stat-num { font-size: 32px; font-weight: 700; color: #0052FF; }
-    .stat-label { font-size: 13px; color: #555; margin-top: 4px; }
-    footer { margin-top: 60px; color: #333; font-size: 13px; }
+    .sub { font-size: 17px; color: #6B7280; line-height: 1.7; max-width: 460px; margin: 0 auto 36px; }
+    .btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary { background: #0052FF; color: #fff; padding: 12px 28px; border-radius: 10px; font-size: 14px; font-weight: 500; text-decoration: none; transition: opacity 0.2s; }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-ghost { background: rgba(255,255,255,0.06); color: #fff; padding: 12px 28px; border-radius: 10px; font-size: 14px; font-weight: 500; text-decoration: none; border: 1px solid rgba(255,255,255,0.1); transition: background 0.2s; }
+    .btn-ghost:hover { background: rgba(255,255,255,0.1); }
+
+    .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 60px 0; }
+    .stat { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 20px; text-align: center; }
+    .stat-n { font-size: 28px; font-weight: 600; color: #0052FF; margin-bottom: 4px; }
+    .stat-l { font-size: 12px; color: #6B7280; }
+
+    .section { margin: 60px 0; }
+    .section-title { font-size: 13px; font-weight: 500; color: #6B7280; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
+    .steps { display: flex; flex-direction: column; gap: 10px; }
+    .step { display: flex; align-items: flex-start; gap: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 18px 20px; }
+    .step-icon { width: 36px; height: 36px; border-radius: 8px; background: rgba(0,82,255,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    .step-t { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
+    .step-d { font-size: 13px; color: #6B7280; line-height: 1.5; }
+
+    .report-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 20px; }
+    .report-tag { font-size: 11px; font-weight: 500; color: #4D8EFF; background: rgba(0,82,255,0.12); padding: 3px 10px; border-radius: 10px; display: inline-block; margin-bottom: 10px; }
+    .report-title { font-size: 15px; font-weight: 500; margin-bottom: 10px; }
+    .report-body { font-size: 13px; color: #6B7280; line-height: 1.65; }
+    .report-meta { margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.07); display: flex; justify-content: space-between; font-size: 12px; color: #4B5563; }
+
+    .topics { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .topic { font-size: 12px; color: #6B7280; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 5px 12px; border-radius: 20px; }
+
+    footer { border-top: 1px solid rgba(255,255,255,0.07); padding: 28px 0; text-align: center; font-size: 13px; color: #4B5563; margin-top: 40px; }
+    footer a { color: #0052FF; text-decoration: none; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="badge">🔵 Built on Base</div>
-    <h1>Base<span>Pulse</span></h1>
-    <p>AI-powered daily digest of Base ecosystem activity. DeFi trends, NFT activity, developer metrics — automatically every day.</p>
-    <div class="links">
-      <a href="https://github.com/Zganz404/base-pulse" class="btn btn-primary">View on GitHub</a>
-      <a href="https://github.com/Zganz404/base-pulse/tree/main/reports" class="btn btn-secondary">📊 Reports</a>
+
+<canvas id="bg"></canvas>
+
+<div class="wrap">
+  <nav>
+    <div class="logo">Base<span>Pulse</span></div>
+    <div class="nav-links">
+      <a href="https://github.com/Zganz404/base-pulse/tree/main/reports">Reports</a>
+      <a href="https://github.com/Zganz404/base-pulse">GitHub</a>
     </div>
-    <div class="stats">
-      <div class="stat">
-        <div class="stat-num">365</div>
-        <div class="stat-label">reports per year</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">100%</div>
-        <div class="stat-label">automated</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">free</div>
-        <div class="stat-label">open source</div>
-      </div>
+  </nav>
+
+  <div class="hero">
+    <div class="pill"><div class="pill-dot"></div> Live on Base</div>
+    <h1>Daily AI digest<br>of <span>Base</span> ecosystem</h1>
+    <p class="sub">DeFi trends, NFT activity, developer metrics — generated automatically every day by AI and committed to GitHub.</p>
+    <div class="btns">
+      <a href="https://github.com/Zganz404/base-pulse" class="btn-primary">View on GitHub</a>
+      <a href="https://github.com/Zganz404/base-pulse/tree/main/reports" class="btn-ghost">Browse reports</a>
     </div>
-    <footer>MIT License · Made by <a href="https://github.com/Zganz404" style="color:#0052FF">Zganz404</a></footer>
   </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-n">365</div><div class="stat-l">reports per year</div></div>
+    <div class="stat"><div class="stat-n">100%</div><div class="stat-l">automated</div></div>
+    <div class="stat"><div class="stat-n">free</div><div class="stat-l">open source</div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">How it works</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-icon">⏰</div>
+        <div><div class="step-t">Daily trigger</div><div class="step-d">GitHub Actions fires at 9:15 UTC with a backup at 21:15 UTC — so no day is ever skipped</div></div>
+      </div>
+      <div class="step">
+        <div class="step-icon">🤖</div>
+        <div><div class="step-t">AI generation</div><div class="step-d">OpenRouter picks a Base ecosystem topic and writes a structured Markdown report automatically</div></div>
+      </div>
+      <div class="step">
+        <div class="step-icon">📦</div>
+        <div><div class="step-t">Auto commit</div><div class="step-d">Report lands in reports/ and is committed to the repo — no manual work, ever</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Sample report</div>
+    <div class="report-card">
+      <div class="report-tag">DeFi</div>
+      <div class="report-title">Base L2 TVL trends and top DeFi protocols</div>
+      <div class="report-body">Base continues to show strong developer momentum within the Coinbase ecosystem, with over 4,200 active developers and approximately 42% of new Ethereum ecosystem code being written on Base. The network positions itself as the primary execution layer for onchain products.</div>
+      <div class="report-meta"><span>Jun 10, 2026</span><span>openrouter/auto</span></div>
+    </div>
+    <div class="topics">
+      <div class="topic">DeFi TVL</div>
+      <div class="topic">NFT activity</div>
+      <div class="topic">Developer metrics</div>
+      <div class="topic">Gas analytics</div>
+      <div class="topic">Bridge flows</div>
+      <div class="topic">AI agents</div>
+      <div class="topic">Stablecoin flows</div>
+    </div>
+  </div>
+
+  <footer>
+    MIT License · Made by <a href="https://github.com/Zganz404">Zganz404</a> · <a href="https://talent.app">aleksaa.base.eth</a>
+  </footer>
+</div>
+
+<script>
+  const c = document.getElementById('bg');
+  const ctx = c.getContext('2d');
+  let W, H, pts;
+  function init() {
+    W = c.width = window.innerWidth;
+    H = c.height = window.innerHeight;
+    pts = Array.from({length: 60}, () => ({
+      x: Math.random()*W, y: Math.random()*H,
+      vx: (Math.random()-0.5)*0.4, vy: (Math.random()-0.5)*0.4
+    }));
+  }
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if(p.x<0||p.x>W) p.vx*=-1;
+      if(p.y<0||p.y>H) p.vy*=-1;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 1.5, 0, Math.PI*2);
+      ctx.fillStyle = '#0052FF';
+      ctx.fill();
+    });
+    pts.forEach((a,i) => pts.slice(i+1).forEach(b => {
+      const d = Math.hypot(a.x-b.x, a.y-b.y);
+      if(d < 120) {
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.strokeStyle = `rgba(0,82,255,${1-d/120})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }));
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', init);
+  init(); draw();
+</script>
 </body>
 </html>

@@ -1,3 +1,4 @@
 - [2026-06-09 — Coinbase and Base ecosystem developer activity](./report-2026-06-09-2026-06-09T12-03-09-407Z.md)
 - [2026-06-10 — Coinbase and Base ecosystem developer activity](./report-2026-06-10-2026-06-10T12-35-55-081Z.md)
 - [2026-06-11 — Base L2 TVL trends and top DeFi protocols](./report-2026-06-11-2026-06-11T08-41-35-198Z.md)
+- [2026-06-12 — Base ecosystem NFT activity and notable collections](./report-2026-06-12-2026-06-12T12-29-23-397Z.md)

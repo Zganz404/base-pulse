@@ -2,21 +2,23 @@ name: BasePulse Daily Digest
 
 on:
   schedule:
+    - cron: '15 7 * * *'
     - cron: '15 9 * * *'
+    - cron: '15 11 * * *'
+    - cron: '15 13 * * *'
     - cron: '15 21 * * *'
   workflow_dispatch:
-
-permissions:
-  contents: write
 
 jobs:
   generate:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_PAT }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -29,7 +31,7 @@ jobs:
       - name: Check if already ran today
         id: check
         run: |
-          TODAY=$(date +'%Y-%m-%d')
+          TODAY=$(date +%Y-%m-%d)
           if ls reports/report-${TODAY}-*.md 2>/dev/null | grep -q .; then
             echo "already_ran=true" >> $GITHUB_OUTPUT
           else
@@ -41,13 +43,22 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           TALENT_WALLET: ${{ secrets.TALENT_WALLET }}
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: node bot.js
 
-      - name: Commit reports
+      - name: Commit and push
         if: steps.check.outputs.already_ran == 'false'
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
-          git config user.name "BasePulse Bot"
-          git config user.email "bot@base-pulse.dev"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:${GH_PAT}@github.com/Zganz404/base-pulse.git"
+          git pull origin main --rebase
           git add reports/
           git diff --staged --quiet || git commit -m "📊 Daily report $(date +'%Y-%m-%d')"
-          git push
+          git push origin main
+
+      - name: Already ran today
+        if: steps.check.outputs.already_ran == 'true'
+        run: echo "Report already exists for today, skipping."

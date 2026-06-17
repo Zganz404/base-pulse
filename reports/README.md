@@ -3,3 +3,4 @@
 - [2026-06-11 — Base L2 TVL trends and top DeFi protocols](./report-2026-06-11-2026-06-11T08-41-35-198Z.md)
 - [2026-06-12 — Base ecosystem NFT activity and notable collections](./report-2026-06-12-2026-06-12T12-29-23-397Z.md)
 - [2026-06-16 — Cross-chain bridges activity to and from Base](./report-2026-06-16-2026-06-16T10-37-37-984Z.md)
+- [2026-06-17 — Base L2 TVL trends and top DeFi protocols](./report-2026-06-17-2026-06-17T11-56-54-234Z.md)

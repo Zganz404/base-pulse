@@ -8,3 +8,4 @@
 - [2026-06-19 — AI agent projects building on Base blockchain](./report-2026-06-19-2026-06-19T11-41-16-265Z.md)
 - [2026-06-20 — Base L2 TVL trends and top DeFi protocols](./report-2026-06-20-2026-06-20T10-12-44-707Z.md)
 - [2026-06-21 — Base ecosystem NFT activity and notable collections](./report-2026-06-21-2026-06-21T10-45-19-919Z.md)
+- [2026-06-22 — Base L2 TVL trends and top DeFi protocols](./report-2026-06-22-2026-06-22T13-04-34-689Z.md)

@@ -10,3 +10,4 @@
 - [2026-06-21 — Base ecosystem NFT activity and notable collections](./report-2026-06-21-2026-06-21T10-45-19-919Z.md)
 - [2026-06-22 — Base L2 TVL trends and top DeFi protocols](./report-2026-06-22-2026-06-22T13-04-34-689Z.md)
 - [2026-06-23 — Base network gas fees and transaction volume analysis](./report-2026-06-23-2026-06-23T10-42-59-371Z.md)
+- [2026-06-24 — Base ecosystem stablecoin flows and liquidity](./report-2026-06-24-2026-06-24T10-27-41-634Z.md)

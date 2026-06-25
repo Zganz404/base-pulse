@@ -11,3 +11,4 @@
 - [2026-06-22 — Base L2 TVL trends and top DeFi protocols](./report-2026-06-22-2026-06-22T13-04-34-689Z.md)
 - [2026-06-23 — Base network gas fees and transaction volume analysis](./report-2026-06-23-2026-06-23T10-42-59-371Z.md)
 - [2026-06-24 — Base ecosystem stablecoin flows and liquidity](./report-2026-06-24-2026-06-24T10-27-41-634Z.md)
+- [2026-06-25 — Base ecosystem stablecoin flows and liquidity](./report-2026-06-25-2026-06-25T10-20-12-591Z.md)
